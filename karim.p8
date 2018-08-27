@@ -4,113 +4,112 @@ __lua__
 t=0
 
 function _init()
-  titleinit()
+ titleinit()
 end
 
 function titleinit()
-  mode=0
-  title={sp=7}
+ mode=0
+ title={sp=7}
 end
 
 function gameinit()
-  mode=1
-  karim={sp=1,x=40,y=64,w=8,h=8,f=false}
-  tachun={sp=3,x=80,y=64,w=8,h=8,f=true}
-  flute={sp=16,x=40,y=80}
-  coin={sp=5,x=80,y=80}
+ mode=1
+ karim={sp=1,x=40,y=64,w=8,h=8,f=false}
+ tachun={sp=3,x=80,y=64,w=8,h=8,f=true}
+ flute={sp=16,x=40,y=80}
+ coin={sp=5,x=80,y=80}
 end
 
 function _update()
-  if(mode==0) then
-    cls()
-    spr(title.sp,48,32,4,4)
-    print('karim',20,48,7)
-    print('tachun',86,48,7)
-    print('press ❎ to start',30,80)
-    animate()
-    startgame()
-  else
-    cls(3)
-    animate()
-    move()
-  end
+ if(mode==0) then
+  cls()
+  spr(title.sp,48,32,4,4)
+  print('karim',20,48,7)
+  print('tachun',86,48,7)
+  print('press ❎ to start',30,80)
+  animate()
+  startgame()
+ else
+  cls(3)
+  animate()
+  move()
+ end
 end
 
 function _draw()
-  if(mode==1) then
-    rectfill(16,16,112,112,2)
-    spr(karim.sp,karim.x,karim.y,1,1,karim.f)
-    spr(tachun.sp,tachun.x,tachun.y,1,1,tachun.f)
-    spr(flute.sp,flute.x,flute.y)
-    spr(coin.sp,coin.x,coin.y)
-  end
+ if(mode==1) then
+  rectfill(16,16,112,112,2)
+  spr(karim.sp,karim.x,karim.y,1,1,karim.f)
+  spr(tachun.sp,tachun.x,tachun.y,1,1,tachun.f)
+  spr(flute.sp,flute.x,flute.y)
+  spr(coin.sp,coin.x,coin.y)
+ end
 end
 
 function animate()
-  if(mode==0) then
-    animatetitle() 
-  else
-    animategame() 
-  end
+ if(mode==0) then
+  animatetitle() 
+ else
+  animategame() 
+ end
 end
 
 function animatetitle()
-  t+=1
-  if(t%8<4) then
-    title.sp=7
-  else
-    title.sp=11
-  end
+ t+=1
+ if(t%8<4) then
+  title.sp=7
+ else
+  title.sp=11
+ end
 end
 
 function animategame()
-  t+=1
-  if(t%8<4) then
-    karim.sp=1
-    tachun.sp=3
-    flute.sp=16
-    coin.sp=5
-  else
-    karim.sp=2
-    tachun.sp=4
-    flute.sp=17
-    coin.sp=6
-  end
+ t+=1
+ if(t%8<4) then
+  karim.sp=1
+  tachun.sp=3
+  flute.sp=16
+  coin.sp=5
+ else
+  karim.sp=2
+  tachun.sp=4
+  flute.sp=17
+  coin.sp=6
+ end
 end
 
 function startgame()
-  if (btn(5)) then
-    sfx(1) 
-    gameinit() 
-  end
+ if(btn(5)) then
+  sfx(1) 
+  gameinit() 
+ end
 end
 
 function move()
-  if (btn(0,0) and karim.x>16) then
-    karim.f=true
-    karim.x-=1 
-  end
-  if (btn(1,0) and karim.x<104) then
-    karim.f=false
-    karim.x+=1
-  end
-  if (btn(2,0) and karim.y>17) then karim.y -= 1 end
-  if (btn(3,0) and karim.y<104) then karim.y += 1 end
-  if (btn(0,1) and tachun.x>16) then
-    tachun.f=true
-    tachun.x-=1
-  end
-  if (btn(1,1) and tachun.x<104) then
-    tachun.f=false
-    tachun.x += 1
-  end
-  if (btn(2,1) and tachun.y>17) then tachun.y -= 1 end
-  if (btn(3,1) and tachun.y<104) then tachun.y += 1 end
+ if(btn(0,0) and karim.x>16) then
+  karim.f=true
+  karim.x-=1 
+ end
+ if(btn(1,0) and karim.x<104) then
+  karim.f=false
+  karim.x+=1
+ end
+ if(btn(2,0) and karim.y>17) then karim.y -= 1 end  if (btn(3,0) and karim.y<104) then karim.y += 1 end
+ if(btn(0,1) and tachun.x>16) then
+  tachun.f=true
+  tachun.x-=1
+ end
+ if(btn(1,1) and tachun.x<104) then
+  tachun.f=false
+  tachun.x += 1
+ end
+ if(btn(2,1) and tachun.y>17) then tachun.y -= 1 end
+ if(btn(3,1) and tachun.y<104) then tachun.y += 1 end
   
-  if(collide(karim,tachun)) then 
-    print('lol')
-    sfx(0) 
-  end
+ if(collide(karim,tachun)) then 
+  print('lol')
+  sfx(0) 
+ end
 end
 
 function collide(a, b)
