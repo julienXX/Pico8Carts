@@ -129,26 +129,28 @@ function move()
 end
 
 function karimfire()
+ if(karim.f==true) then ldx=-3 else ldx=3 end
  local b={
   from=karim,
   sp=16,
   asp=17,
   x=karim.x,
   y=karim.y,
-  dx=3,
+  dx=ldx,
   dy=0
  }
  add(bullets,b)
 end
 
 function tachunfire()
- local b={
+  if(tachun.f==true) then ldx=-3 else ldx=3 end
+  local b={
   from=tachun,
   sp=5,
   asp=6,
   x=tachun.x,
   y=tachun.y,
-  dx=-3,
+  dx=ldx,
   dy=0
  }
  add(bullets,b)
