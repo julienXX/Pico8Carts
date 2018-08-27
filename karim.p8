@@ -14,8 +14,8 @@ end
 
 function gameinit()
   mode=1
-  karim={sp=1,x=40,y=64,w=8,h=8}
-  tachun={sp=3,x=80,y=64,w=8,h=8}
+  karim={sp=1,x=40,y=64,w=8,h=8,f=false}
+  tachun={sp=3,x=80,y=64,w=8,h=8,f=true}
   flute={sp=16,x=40,y=80}
   coin={sp=5,x=80,y=80}
 end
@@ -39,8 +39,8 @@ end
 function _draw()
   if(mode==1) then
     rectfill(16,16,112,112,2)
-    spr(karim.sp,karim.x,karim.y)
-    spr(tachun.sp,tachun.x,tachun.y,1,1,true)
+    spr(karim.sp,karim.x,karim.y,1,1,karim.f)
+    spr(tachun.sp,tachun.x,tachun.y,1,1,tachun.f)
     spr(flute.sp,flute.x,flute.y)
     spr(coin.sp,coin.x,coin.y)
   end
@@ -79,20 +79,38 @@ function animategame()
 end
 
 function startgame()
-  if (btn(5)) then gameinit() end
+  if (btn(5)) then
+    sfx(1) 
+    gameinit() 
+  end
 end
 
 function move()
-  if (btn(0,0) and karim.x>16) then karim.x -= 1 end
-  if (btn(1,0) and karim.x<104) then karim.x += 1 end
+  if (btn(0,0) and karim.x>16) then
+    karim.f=true
+    karim.x-=1 
+  end
+  if (btn(1,0) and karim.x<104) then
+    karim.f=false
+    karim.x+=1
+  end
   if (btn(2,0) and karim.y>17) then karim.y -= 1 end
   if (btn(3,0) and karim.y<104) then karim.y += 1 end
-  if (btn(0,1) and tachun.x>16) then tachun.x -= 1 end
-  if (btn(1,1) and tachun.x<104) then tachun.x += 1 end
+  if (btn(0,1) and tachun.x>16) then
+    tachun.f=true
+    tachun.x-=1
+  end
+  if (btn(1,1) and tachun.x<104) then
+    tachun.f=false
+    tachun.x += 1
+  end
   if (btn(2,1) and tachun.y>17) then tachun.y -= 1 end
   if (btn(3,1) and tachun.y<104) then tachun.y += 1 end
   
-  if(collide(karim,tachun)) then print('lol') end
+  if(collide(karim,tachun)) then 
+    print('lol')
+    sfx(0) 
+  end
 end
 
 function collide(a, b)
@@ -135,3 +153,6 @@ __gfx__
 __gff__
 0001010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+__sfx__
+00010000094500c4500e4500d4000a400084000640005400064000840008400044000340002400014000140001400014000140003400044000440006400094000d4000f4001040010400114000f4000c4000a400
+00100000063500b3501135016350193501e35021350233001b35001300123000e300113001130006300153000e3000e300133001e30013300183001d30021300253002730028300293002a300000002c3002d300
